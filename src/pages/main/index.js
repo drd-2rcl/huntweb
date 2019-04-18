@@ -18,9 +18,12 @@ export default class Main extends Component {
   
   loadProducts = async () => {
     const response = await Axios.get('https://rocketseat-node.herokuapp.com/api/products');
-    console.log(response.data.docs);
+    // console.log(response.data.docs);
     this.setState({ products: response.data.docs })
   }
+
+  prevPage = () => {}
+  nextPage = () => {}
 
   render() {
     const { products } = this.state;
@@ -30,9 +33,13 @@ export default class Main extends Component {
           <article key={product._id}>
             <strong>{product.title}</strong>
             <p>{product.description}</p>
-            <a ref={() => null}>Acessar</a>
+            <a ref="">Acessar</a>
           </article>
         ))}
+        <div className="actions" >
+          <button onClick={this.prevPage} >Anterior</button>
+          <button onClick={this.nextPage} >Próximo</button>
+        </div>
       </div>
     )
   }
