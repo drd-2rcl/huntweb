@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import './styles.css';
 
@@ -18,31 +19,24 @@ export default class Main extends Component {
   // async e await facilita a maneira de lidar com promises dentro do javascript (menos verboza)
   
   loadProducts = async (page = 1) => {
-    const response = await Axios.get(`https://rocketseat-node.herokuapp.com/api/products?page=${page}`); 
-    
+    const response = await Axios.get(
+      `https://rocketseat-node.herokuapp.com/api/products?page=${page}`
+    ); 
     const { docs, ...productInfo } = response.data;
-    
     this.setState({ products: docs, productInfo, page });
-  };
+  }; 
 
   prevPage = () => {
     const { page, productInfo } = this.state;
-
     if ( page === 1) return;
-
     const pageNumber = page - 1;
-
     this.loadProducts(pageNumber);
-
   }
 
   nextPage = () => {
     const { page, productInfo } = this.state;
-
     if (page === productInfo.pages) return;
-
     const pageNumber = page + 1;
-
     this.loadProducts(pageNumber);
   }
 
@@ -54,7 +48,7 @@ export default class Main extends Component {
           <article key={product._id}>
             <strong>{product.title}</strong>
             <p>{product.description}</p>
-            <a ref="">Acessar</a>
+            <Link to={`/products/${product._id}`}>Acessar</Link>
           </article>
         ))}
         <div className="actions" >
